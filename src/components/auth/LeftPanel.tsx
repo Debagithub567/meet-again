@@ -5,20 +5,25 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {useState} from "react";
 import { SignUpSchema } from "@/src/lib/validation";
+import {useForm} from "react-hook-form"
+
+
+type FormFields = {
+  fullname: string;
+  email: string;
+  password: string;
+}
 
 export default function LeftPanel() {
-  const[fullName,setFullName]=useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const {register,handleSubmit} = useForm<FormFields>();
+  const onSubmit:SubmitHandler<FormFields> = (data) => {
+    console.log(data);
+  };
+   
 
-  function handleSubmit(e: React.FormEvent){
-    e.preventDefault();
 
-    console.log(fullName);
-    console.log(email);
-    console.log(password);
   }
-  return (<form onSubmit={handleSubmit}>
+  return (<form onSubmit={handleSubmit(onsubmit)}>
     <div className="h-screen bg-white flex justify-center">
       <div className="w-full max-w-md pt-16">
 
@@ -43,8 +48,8 @@ export default function LeftPanel() {
           <div className="space-y-2">
             <p className="font-medium">Full Name</p>
             <Input
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              {...register("fullname")}
+              type="text"
               placeholder="Enter your full name"
               className="h-12"
             />
@@ -53,8 +58,8 @@ export default function LeftPanel() {
           <div className="space-y-2">
             <p className="font-medium">Email</p>
             <Input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+             {...register("email")}
+              type="email"
               placeholder="Enter your email"
               className="h-12"
             />
@@ -64,8 +69,8 @@ export default function LeftPanel() {
             
             <p className="font-medium">Password</p>
             <Input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register("password")}
+              
               type="password"
               placeholder="Enter your password"
               className="h-12"
