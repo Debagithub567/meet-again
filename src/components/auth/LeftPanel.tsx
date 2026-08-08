@@ -3,87 +3,116 @@
 import AuthTabs from "./AuthTabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {useState} from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpSchema } from "@/src/lib/validation";
-import {useForm} from "react-hook-form"
-
 
 type FormFields = {
-  fullname: string;
+  fullName: string;
   email: string;
   password: string;
-}
+};
 
 export default function LeftPanel() {
-  const {register,handleSubmit} = useForm<FormFields>();
-  const onSubmit:SubmitHandler<FormFields> = (data) => {
-    console.log(data);
-  };
-   
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormFields>({
+    resolver: zodResolver(SignUpSchema),
+  });
 
+const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  await fetch("/api/auth/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
-  }
-  return (<form onSubmit={handleSubmit(onsubmit)}>
-    <div className="h-screen bg-white flex justify-center">
-      <div className="w-full max-w-md pt-16">
+  console.log(data);
+};
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="h-screen bg-white flex justify-center">
+        <div className="w-full max-w-md pt-16">
 
-        {/* Header */}
-        <header className="space-y-5">
-          <AuthTabs />
+          {/* Header */}
+          <header className="space-y-5">
+            <AuthTabs />
 
-          <div className="space-y-2 text-center">
-            <h1 className="text-5xl font-bold tracking-tight">
-              Sign into your account
-            </h1>
+            <div className="space-y-2 text-center">
+              <h1 className="text-5xl font-bold tracking-tight">
+                Sign into your account
+              </h1>
 
-            <p className="text-gray-500 text-lg">
-              Sign up and get 1 month free trial
-            </p>
-          </div>
-        </header>
+              <p className="text-gray-500 text-lg">
+                Sign up and get 1 month free trial
+              </p>
+            </div>
+          </header>
 
-        {/* Form */}
-        <main className="mt-10 space-y-6">
+          {/* Form */}
+          <main className="mt-10 space-y-6">
 
-          <div className="space-y-2">
-            <p className="font-medium">Full Name</p>
-            <Input
-              {...register("fullname")}
-              type="text"
-              placeholder="Enter your full name"
-              className="h-12"
-            />
-          </div>
+            <div className="space-y-2">
+              <p className="font-medium">Full Name</p>
 
-          <div className="space-y-2">
-            <p className="font-medium">Email</p>
-            <Input
-             {...register("email")}
-              type="email"
-              placeholder="Enter your email"
-              className="h-12"
-            />
-          </div>
+              <Input
+                {...register("fullName")}
+                placeholder="Enter your full name"
+                className="h-12"
+              />
 
-          <div className="space-y-2">
-            
-            <p className="font-medium">Password</p>
-            <Input
-            {...register("password")}
-              
-              type="password"
-              placeholder="Enter your password"
-              className="h-12"
-            />
-          </div>
+              {errors.fullName && (
+                <p className="text-sm text-red-500">
+                  {errors.fullName.message}
+                </p>
+              )}
+            </div>
 
-          <Button type="submit" className="w-full h-12 rounded-xl">
-            Sign Up
-          </Button>
+            <div className="space-y-2">
+              <p className="font-medium">Email</p>
 
-        </main>
+              <Input
+                {...register("email")}
+                type="email"
+                placeholder="Enter your email"
+                className="h-12"
+              />
+
+              {errors.email && (
+                <p className="text-sm text-red-500">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <p className="font-medium">Password</p>
+
+              <Input
+                {...register("password")}
+                type="password"
+                placeholder="Enter your password"
+                className="h-12"
+              />
+
+              {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <Button type="submit" className="w-full h-12 rounded-xl">
+              Sign Up
+            </Button>
+
+          </main>
+        </div>
       </div>
-    </div>
-   </form>
-   );
+    </form>
+  );
 }
