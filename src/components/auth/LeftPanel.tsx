@@ -107,7 +107,7 @@ const onSubmit: SubmitHandler<FormFields> = async (data) => {
             </div>
 
             <Button type="submit" className="w-full h-12 rounded-xl">
-              Sign Up Here
+              Sign Up Now
             </Button>
 
           </main>
