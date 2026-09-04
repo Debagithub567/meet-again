@@ -48,7 +48,7 @@ const onSubmit: SubmitHandler<FormFields> = async (data) => {
               </h1>
 
               <p className="text-gray-500 text-lg">
-                Sign up and get 1 month free trial
+                Sign up and get One month free trial
               </p>
             </div>
           </header>
