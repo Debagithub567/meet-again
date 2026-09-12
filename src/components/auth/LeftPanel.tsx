@@ -44,7 +44,7 @@ const onSubmit: SubmitHandler<FormFields> = async (data) => {
 
             <div className="space-y-2 text-center">
               <h1 className="text-5xl font-bold tracking-tight">
-                Sign into your account
+                Sign in to your account
               </h1>
 
               <p className="text-gray-500 text-lg">
