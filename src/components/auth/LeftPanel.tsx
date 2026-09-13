@@ -48,7 +48,7 @@ const onSubmit: SubmitHandler<FormFields> = async (data) => {
               </h1>
 
               <p className="text-gray-500 text-lg">
-                Sign up 
+                Sign up here
               </p>
             </div>
           </header>
