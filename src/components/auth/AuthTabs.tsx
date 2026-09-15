@@ -6,7 +6,7 @@ export default function AuthTabs() {
     <Tabs defaultValue="signup" className="w-full">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="signup">
-          Sign Up
+          Sign Up Here
         </TabsTrigger>
 
         <TabsTrigger value="signin">
